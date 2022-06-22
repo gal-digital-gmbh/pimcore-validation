@@ -22,6 +22,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param mixed[] $constraints
+     * @param ParameterBag<mixed>|null $parameters
      *
      * @return mixed[]
      */
@@ -101,6 +102,8 @@ class Validator implements ValidatorInterface
     }
 
     /**
+     * @param ParameterBag<mixed>|null $parameters
+     *
      * @return mixed[]
      */
     private function getRequestParameters(?ParameterBag $parameters = null): array

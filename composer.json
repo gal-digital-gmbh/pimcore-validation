@@ -25,7 +25,8 @@
   ],
   "require": {
     "php": "^8.0",
-    "symfony/framework-bundle": "^5.0|^6.0",
+    "symfony/framework-bundle": "^5.4|^6.0",
+    "symfony/service-contracts": "^2.2|^3.0",
     "symfony/validator": "^5.4"
   },
   "require-dev": {
