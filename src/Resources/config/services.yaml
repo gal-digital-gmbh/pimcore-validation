@@ -4,6 +4,6 @@ services:
     autoconfigure: true
     public: false
 
-  GalDigitalGmbh\Validation\Symfony:
+  GalDigitalGmbh\Validation\Symfony\:
     resource: '../../Symfony'
     exclude: '../../Symfony/{Exception,Traits}'
