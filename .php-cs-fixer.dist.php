@@ -13,7 +13,12 @@ return (new PhpCsFixer\Config())
         '@PhpCsFixer'     => true,
         '@PHP81Migration' => true,
 
-        'binary_operator_spaces'      => ['default' => 'align_single_space_minimal'],
+        'binary_operator_spaces' => [
+            'operators' => [
+                '=>' => 'align_single_space_minimal',
+                '='  => 'align_single_space_minimal',
+            ],
+        ],
         'class_definition'            => ['multi_line_extends_each_single_line' => true],
         'concat_space'                => ['spacing' => 'one'],
         'modernize_strpos'            => true,
