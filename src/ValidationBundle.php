@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GalDigitalGmbh\Validation;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class ValidationBundle extends Bundle
+final class ValidationBundle extends Bundle
 {
-
 }

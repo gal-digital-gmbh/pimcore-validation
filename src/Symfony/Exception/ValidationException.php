@@ -1,15 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GalDigitalGmbh\Validation\Symfony\Exception;
 
 use RuntimeException;
+use Stringable;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class ValidationException extends RuntimeException
+final class ValidationException extends RuntimeException
 {
-    /**
-     * @param ConstraintViolationListInterface<mixed> $violations
-     */
     public function __construct(
         private ConstraintViolationListInterface $violations,
     ) {
@@ -29,7 +29,11 @@ class ValidationException extends RuntimeException
         $messages = [];
 
         foreach ($this->getViolations() as $violation) {
-            $messages[$violation->getPropertyPath()][] = $violation->getMessage();
+            $message = $violation->getMessage();
+
+            $messages[$violation->getPropertyPath()][] = $message instanceof Stringable
+                ? $message->__toString()
+                : $message;
         }
 
         return $messages;

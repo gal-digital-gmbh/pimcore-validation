@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GalDigitalGmbh\Validation\Symfony\Traits;
 
 use GalDigitalGmbh\Validation\Symfony\Validator;
