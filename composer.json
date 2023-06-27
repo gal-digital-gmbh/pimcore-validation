@@ -1,6 +1,6 @@
 {
   "name": "gal-digital-gmbh/validation",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "symfony-bundle",
   "description": "Make validation simple",
   "keywords": [
@@ -27,11 +27,11 @@
     "php": "^8.0",
     "symfony/framework-bundle": "^5.4|^6.0",
     "symfony/service-contracts": "^2.2|^3.0",
-    "symfony/validator": "^5.4"
+    "symfony/validator": "^5.4|^6.0"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.8",
-    "phpstan/phpstan": "^1.4"
+    "friendsofphp/php-cs-fixer": "^3.13",
+    "phpstan/phpstan": "^1.10"
   },
   "autoload": {
     "psr-4": {

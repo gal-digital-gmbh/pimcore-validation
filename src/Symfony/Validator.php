@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace GalDigitalGmbh\Validation\Symfony;
 
 use GalDigitalGmbh\Validation\Symfony\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\MetadataInterface;
@@ -14,7 +18,11 @@ use Symfony\Component\Validator\Validator\ContextualValidatorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Service\Attribute\Required;
 
-class Validator implements ValidatorInterface
+use function array_keys;
+use function array_merge;
+use function count;
+
+final class Validator implements ValidatorInterface
 {
     private RequestStack $requestStack;
 
@@ -35,10 +43,14 @@ class Validator implements ValidatorInterface
         return $this->filterValidatedData($constraints, $value);
     }
 
+    /**
+     * @param Constraint|Constraint[] $constraints
+     * @param string|GroupSequence|array<string|GroupSequence>|null $groups
+     */
     public function validate(
-        $value,
-        $constraints = null,
-        $groups = null,
+        mixed $value,
+        Constraint|array $constraints = null,
+        string|GroupSequence|array $groups = null,
         bool $throwException = true,
     ): ConstraintViolationListInterface {
         $violations = $this->validator->validate($value, $constraints, $groups);
@@ -46,10 +58,13 @@ class Validator implements ValidatorInterface
         return $this->throwViolationsIfNecessary($violations, $throwException);
     }
 
+    /**
+     * @param string|GroupSequence|array<string|GroupSequence>|null $groups
+     */
     public function validateProperty(
         object $object,
         string $propertyName,
-        $groups = null,
+        string|GroupSequence|array $groups = null,
         bool $throwException = true,
     ): ConstraintViolationListInterface {
         $violations = $this->validator->validateProperty($object, $propertyName, $groups);
@@ -57,11 +72,14 @@ class Validator implements ValidatorInterface
         return $this->throwViolationsIfNecessary($violations, $throwException);
     }
 
+    /**
+     * @param string|GroupSequence|array<string|GroupSequence>|null $groups
+     */
     public function validatePropertyValue(
-        $objectOrClass,
+        object|string $objectOrClass,
         string $propertyName,
-        $value,
-        $groups = null,
+        mixed $value,
+        string|GroupSequence|array $groups = null,
         bool $throwException = true,
     ): ConstraintViolationListInterface {
         $violations = $this->validator->validatePropertyValue($objectOrClass, $propertyName, $value, $groups);
@@ -79,12 +97,12 @@ class Validator implements ValidatorInterface
         return $this->validator->inContext($context);
     }
 
-    public function getMetadataFor($value): MetadataInterface
+    public function getMetadataFor(mixed $value): MetadataInterface
     {
         return $this->validator->getMetadataFor($value);
     }
 
-    public function hasMetadataFor($value): bool
+    public function hasMetadataFor(mixed $value): bool
     {
         return $this->validator->hasMetadataFor($value);
     }
